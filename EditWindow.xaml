@@ -1,0 +1,41 @@
+<Window x:Class="LaundryPractice.EditWindow" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Style="{StaticResource {x:Type Window}}" WindowStartupLocation="CenterScreen" Title="Добавление" Width="550" Height="750" MinWidth="530" MinHeight="500">
+  <Grid Margin="26">
+    <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="*"/><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+    <TextBlock x:Name="HeadingText" Style="{StaticResource Heading}"/>
+    <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+      <StackPanel>
+        <StackPanel x:Name="UserFields" Visibility="Collapsed">
+          <TextBlock Text="Логин"/><TextBox x:Name="LoginInput" Tag="Латинские буквы и цифры" MaxLength="40" ToolTip="3–40 латинских букв, цифр, точек, дефисов и подчёркиваний"/>
+          <TextBlock Text="ФИО"/><TextBox x:Name="FullNameInput" Tag="Фамилия Имя Отчество" MaxLength="100" ToolTip="Только буквы, пробелы, дефисы и апострофы"/>
+          <TextBlock Text="Электронная почта"/><TextBox x:Name="EmailInput" Tag="name@example.ru" MaxLength="150" ToolTip="Корректный адрес электронной почты"/>
+          <TextBlock Text="Пароль"/><PasswordBox x:Name="PasswordInput" Tag="При редактировании можно оставить пустым" ToolTip="8–64 символа, буква и цифра. Пустое поле сохраняет старый пароль"/>
+          <TextBlock Text="Роль"/><ComboBox x:Name="RoleInput" ToolTip="Права доступа"><ComboBoxItem Content="Пользователь"/><ComboBoxItem Content="Администратор"/></ComboBox>
+        </StackPanel>
+        <StackPanel x:Name="ServiceFields" Visibility="Collapsed">
+          <TextBlock Text="Название услуги"/><TextBox x:Name="ServiceNameInput" Tag="Например: Химчистка пальто" MaxLength="120" ToolTip="2–120 символов"/>
+          <TextBlock Text="Единица измерения"/><ComboBox x:Name="UnitInput" ToolTip="За штуку или за килограмм"><ComboBoxItem Content="шт"/><ComboBoxItem Content="кг"/></ComboBox>
+          <TextBlock Text="Цена, руб."/><TextBox x:Name="PriceInput" Tag="От 1 до 100 000" MaxLength="9" ToolTip="1–100 000 рублей, до двух знаков после запятой"/>
+        </StackPanel>
+        <StackPanel x:Name="OrderFields" Visibility="Collapsed">
+          <TextBlock Text="Клиент"/><ComboBox x:Name="ClientInput" DisplayMemberPath="FullName" SelectedValuePath="Id" ToolTip="Активный пользователь, которому принадлежит заказ"/>
+          <TextBlock Text="Услуга"/><ComboBox x:Name="ServiceInput" ToolTip="Активная услуга. Цена сохраняется в заказе" SelectionChanged="PriceChanged"/>
+          <TextBlock Text="Филиал"/><ComboBox x:Name="BranchInput" ToolTip="Филиал сети химчисток и прачечных"/>
+          <Grid><Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition/></Grid.ColumnDefinitions>
+            <StackPanel Margin="0,0,8,0"><TextBlock Text="Дата приёма"/><DatePicker x:Name="ReceivedInput" SelectedDateFormat="Short" ToolTip="Не позднее сегодняшней даты"/></StackPanel>
+            <StackPanel Grid.Column="1" Margin="8,0,0,0"><TextBlock Text="Срок готовности"/><DatePicker x:Name="DueInput" SelectedDateFormat="Short" ToolTip="От даты приёма до одного года после неё"/></StackPanel>
+          </Grid>
+          <TextBlock Text="Количество"/><TextBox x:Name="QuantityInput" Tag="Штуки или килограммы" MaxLength="7" TextChanged="PriceChanged" ToolTip="0,001–100; штуки целым числом, килограммы до трёх знаков после запятой"/>
+          <TextBlock x:Name="TotalText" Margin="0,0,0,12" Foreground="{DynamicResource MutedBrush}"/>
+          <TextBlock Text="Статус"/><ComboBox x:Name="StatusInput" ToolTip="Принят, в работе, готов или выдан"/>
+          <TextBlock Text="Описание вещи"/><TextBox x:Name="DescriptionInput" Tag="Вещь, цвет, особые условия" MaxLength="250" Height="72" AcceptsReturn="True" TextWrapping="Wrap" ToolTip="2–250 символов"/>
+        </StackPanel>
+        <CheckBox x:Name="ActiveInput" Content="Активная запись" IsChecked="True" ToolTip="Отключённые записи не участвуют в новых заказах"/>
+      </StackPanel>
+    </ScrollViewer>
+    <TextBlock x:Name="Hint" Grid.Row="2" TextWrapping="Wrap" Foreground="{DynamicResource ErrorBrush}" Margin="0,8"/>
+    <WrapPanel Grid.Row="3" HorizontalAlignment="Right">
+      <Button x:Name="SaveButton" Content="Сохранить" IsDefault="True" Click="Save" ToolTip="Проверить и сохранить запись"/>
+      <Button Content="Отмена" IsCancel="True" Style="{StaticResource SecondaryButton}" ToolTip="Закрыть без сохранения"/>
+    </WrapPanel>
+  </Grid>
+</Window>
